@@ -4,7 +4,6 @@ on:
    branches:
       - main
 
-
 jobs:
   docker:
     runs-on: 	ubuntu-latest	
@@ -44,7 +43,7 @@ jobs:
     needs: docker
     runs-on: ubuntu-latest
     env:
-      IMAGE_NAME: examen-devops
+      IMAGE_NAME: examendevops
       IMAGE_TAG: 1.1.0
       DOCKER_REGISTRY: docker.io/khadijamba
 
