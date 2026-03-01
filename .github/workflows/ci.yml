@@ -39,28 +39,24 @@ jobs:
           exit-code: 0
           vuln-type: os,library
           ignore-unfixed: true
-      
+     
   deploy:
     needs: docker
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
+    env:
+      IMAGE_NAME: examen-devops
+      IMAGE_TAG: 1.1.0
+      DOCKER_REGISTRY: docker.io/khadijamba
 
     steps:
-      - name: Pull latest image
-        run:  $DOCKER_REGISTRY/$IMAGE_NAME:$IMAGE_TAG
+    - name: Pull latest image
+      run: docker pull $DOCKER_REGISTRY/$IMAGE_NAME:$IMAGE_TAG
 
-      - name: Pull latest image
-        run: docker pull $DOCKER_REGISTRY/$IMAGE_NAME:$IMAGE_TAG
+    - name: Stop old container
+      run: docker stop $IMAGE_NAME || true
 
-      - name: Stop existing container
-        run: docker stop ci-app || true
+    - name: Remove old container
+      run: docker rm $IMAGE_NAME || true
 
-      - name: Remove old container
-        run: |
-          docker rm ci-app || true
-
-      - name: Run new container
-        run: |
-          docker run -d \
-            -p 80:80 \
-            --name ci-app \
-            $DOCKER_REGISTRY/$IMAGE_NAME:$IMAGE_TAG
+    - name: Run new container
+      run: docker run -d -p 80:80 --name $IMAGE_NAME $DOCKER_REGISTRY/$IMAGE_NAME:$IMAGE_TAG
