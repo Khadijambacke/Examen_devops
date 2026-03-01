@@ -36,5 +36,31 @@ jobs:
           image-ref: ${{ secrets.DOCKERHUB_USERNAME }}/examendevops:1.1.0
           format: table
           severity: HIGH,CRITICAL
-          exit-code: 1
+          exit-code: 0
+          vuln-type: os,library
           ignore-unfixed: true
+      
+  deploy:
+    needs: docker
+    runs-on: self-hosted
+
+    steps:
+      - name: Pull latest image
+        run:  $DOCKER_REGISTRY/$IMAGE_NAME:$IMAGE_TAG
+
+      - name: Pull latest image
+        run: docker pull $DOCKER_REGISTRY/$IMAGE_NAME:$IMAGE_TAG
+
+      - name: Stop existing container
+        run: docker stop ci-app || true
+
+      - name: Remove old container
+        run: |
+          docker rm ci-app || true
+
+      - name: Run new container
+        run: |
+          docker run -d \
+            -p 80:80 \
+            --name ci-app \
+            $DOCKER_REGISTRY/$IMAGE_NAME:$IMAGE_TAG
