@@ -1,4 +1,4 @@
-FROM nginx:alpine
+FROM nginx:stable-alpine
 # Use official Nginx image as base (for serving static content)
 
 # Copy our app files into the default Nginx document root (/usr/share/nginx/html)
