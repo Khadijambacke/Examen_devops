@@ -4,7 +4,7 @@ FROM nginx:alpine
 # Copy our app files into the default Nginx document root (/usr/share/nginx/html)
 COPY index.html /usr/share/nginx/html/
 COPY index.html /usr/share/nginx/html/
-COPY single.css /usr/share/nginx/html/
+COPY single.html /usr/share/nginx/html/
 COPY images /usr/share/nginx/html/
 COPY assets /usr/share/nginx/html/
 COPY images /usr/share/nginx/html/
