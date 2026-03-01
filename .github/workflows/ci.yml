@@ -35,7 +35,7 @@ jobs:
           image-ref: ${{ secrets.DOCKERHUB_USERNAME }}/examendevops:1.1.0
           format: table
           severity: HIGH,CRITICAL
-          exit-code: 0
+          exit-code: 1
           vuln-type: os,library
           ignore-unfixed: true
      
