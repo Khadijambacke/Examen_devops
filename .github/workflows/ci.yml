@@ -29,3 +29,4 @@ jobs:
 
       - name: Push image Docker
         run: docker push $DOCKER_HUB_REGISTRY/$IMAGE_NAME:$IMAGE_TAG
+        
